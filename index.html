@@ -50,22 +50,75 @@
         question: "Were you born in Hong Kong?",
         options: [
           {text: "Yes", next: "comingSoon"},
-          {text: "No", next: "parentDependentTerritory"}, 
+          {text: "No", next: "bdtcAndBc"}, 
         ]
+      },
+      bdtcAndBc: {
+        question: "You are likely a British Overseas Territories Citizen AND a British Citizen",
+        options: []
       },
       parentDependentTerritory: {
         question: "Was your parent born in a place that was a British Dependent Territory on 1 January 1983",
         options: [
           {text: "Yes", next: "parentStKitts"},
-          {text: "No", next: "comingSoon"},
+          {text: "No", next: "bornBefore1949"},
         ]
       },
       parentStKitts: {
         question: "Was your parent born in St Kitts?",
         options: [
           {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "parentHongKong"},
+        ]
+      },
+      parentHongKong: {
+        question: "Was your parent born in Hong Kong?",
+        options: [
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "bornBefore1949"},
+        ]
+      },
+      bornBefore1949: {
+        question: "Were you born before 1 January 1949",
+      options: [
+        {text: "Yes", next: "oneThreeCountry"},
+        {text: "No", next: "comingSoon"},
+        ]
+      },
+      oneThreeCountry: {
+        question: "Did your country become independent from the UK on 1 January 1949?",
+        options: [
+          {text: "Yes", next: "parentBornColony"},
           {text: "No", next: "comingSoon"},
         ]
+      },
+      parentBornColony: {
+        question: "Was your legitimate father born in a place that was a UK Colony or the UK on 1 January 1949?",
+        options: [
+          {text: "Yes", next: "retainedCukc"},
+          {text: "No", next: "comingSoon"},
+        ]
+      },
+      retainedCukc: {
+        question: "Did your father's country become independent from the UK before 1 January 1983?",
+        options: [
+          {text: "Yes", next: "gfColonyUk"},
+          {text: "No", next: "comingSoon"},
+        ]
+      }, 
+      gfColonyUk: {
+        question: "Did your grandfather's country become independent from the UK before 1 January 1983?",
+        options: [
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "comingSoon"},
+        ]
+      }, 
+      rightOfAbode: {
+        question: "Were you entitled to Right Of Abode in the UK under the Immigration Act 1971?",
+        options: [
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "comingSoon"},
+      ]
       },
         parentCitizen: {
         question: "Was one of your parents a British citizen, Otherwise Than By Descent when you were born?",
@@ -83,7 +136,7 @@
         question: "Were you adopted under a Hague Convention Adoption Order, with one adoptive parent a British Citizen, Otherwise Than By Descent AND that parent habitually resident in the UK?",
         options: [
           {text: "Yes", next: "citizenUnder21a"},
-          {text: "No", next: "notCitizen"},
+          {text: "No", next: "parentDependentTerritory"},
         ],
         note: "The adoption paperwork must say it is a Hague Convention adoption."
       },
