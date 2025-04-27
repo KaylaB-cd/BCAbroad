@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>British Citizenship Checker</title>
+  <link rel="stylesheet" href="./Resources/CSS/style.css" type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Karla:ital,wght@0,200..800;1,200..800&family=Rum+Raisin&family=Sigmar&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Karla:ital,wght@0,200..800;1,200..800&family=Rum+Raisin&family=Sigmar&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Tuffy:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <h2>British Citizenship Checker</h2>
+    <h3>Born Abroad</h3>
+    <p id="question"></p>
+    <div id="options"></div>
+      <p id="note" class="note"></p>
+    <div id="controls">
+      <button id="backButton" style="display:none;">Back</button>
+      <button id="startOverButton" style="display:none;">Start Over</button>
+    </div>
+  </div> <script>
+    const flow = {
+      start: {
+        question: "Were you born in the UK after 1 January 1983?",
+        options: [
+          { text: "Yes", next: "parentCitizen" },
+          { text: "No", next: "bornInUKBefore1983" }
+        ]
+      },
+      
+      bornInUKBefore1983: {
+        question: "Was your father a diplomat or enemy alien in occupation when you were born?",
+        options: [
+          {text: "Yes", next: "notCitizen"},
+          {text: "No", next: "citizenUnder111"},
+        ]
+      },
+      citizenUnder111: {
+        question: "You are likely a British Citizen under section 11(1) of the British Nationality Act 1981.",
+        options: []
+      },
+      parentCitizen: {
+        question: "Was one of your parents a British citizen when you were born?",
+        options: [
+          { text: "Yes", next: "citizenUnder1a" },
+          { text: "No", next: "parentEEA" }
+        ],
+        note: "Note: For births before 1 July 2006, 'parent' means the mother or the legitimate father."
+      },
+      citizenUnder1a: {
+        question: "You are likely a British citizen under section 1(1)(a) of the British Nationality Act 1981.",
+        options: []
+      },
+      parentSettled: {
+        question: "Was one of your parents settled in the UK when you were born? <span class='link' onclick='showSettled()'>(What does 'settled' mean?)</span>",
+        options: [
+          { text: "Yes", next: "citizenUnder1b" },
+          { text: "No", next: "notCitizen" }
+        ],
+        note: "Note: For births before 1 July 2006, 'parent' means the mother or the legitimate father."
+      },
+      citizenUnder1b: {
+        question: "You are likely a British citizen under section 1(1)(b) of the British Nationality Act 1981.",
+        options: []
+      },
+      parentEEA: {
+        question: "Was your parent an EEA national at the time of your birth?",
+        options: [
+          { text: "Yes", next: "eeaDates" },
+          { text: "No", next: "parentSettled" }
+        ]
+      },
+      notCitizen: {
+        question: "You may not be a British citizen by birth. You may wish to seek legal advice or check if you can register as a citizen.",
+        options: []
+      },
+      eeaDates: {
+        question: "When were you born?",
+        options: [
+          { text: "Before 2 October 2000", next: "eeaTreatyRights" },
+          { text: "Between 2 October 2000 and 30 April 2006", next: "eeaILR" },
+          { text: "After 1 May 2006", next: "eeaPR" }
+        ]
+      },
+      eeaTreatyRights: {
+        question: "Was your parent exercising treaty rights (e.g., working, studying) when you were born?",
+        options: [
+            {text: "Yes", next: "citizenUnder1b"},
+            {text: "No", next: "notCitizen"},
+        ]
+      },
+      eeaILR: {
+        question: "Did your parent have Indefinite Leave to Remain (ILR) at the time of your birth?",
+        options: [
+           {text: "Yes", next: "citizenUnder1b"},
+            {text: "No", next: "notCitizen"},
+        ]
+      },
+      eeaPR: {
+        question: "Did your parent have Permanent Residence at the time of your birth.",
+        options: [
+          {text: "Yes", next: "citizenUnder1b"},
+          {text: "No", next: "notCitizen"},
+                  
+        ]
+      }
+    };
+
+    let currentStep = "start";
+    const history = [];
+
+    function renderStep(stepKey) {
+      if (stepKey !== currentStep) {
+        history.push(currentStep);
+      }
+      currentStep = stepKey;
+
+      const step = flow[stepKey];
+      document.getElementById("question").innerHTML = step.question;
+
+      const optionsContainer = document.getElementById("options");
+      optionsContainer.innerHTML = "";
+
+      step.options.forEach(opt => {
+        const button = document.createElement("button");
+        button.textContent = opt.text;
+        button.onclick = () => renderStep(opt.next);
+        optionsContainer.appendChild(button);
+      });
+
+      document.getElementById("note").textContent = step.note || "";
+      document.getElementById("backButton").style.display = history.length > 0 ? "block" : "none";
+      document.getElementById("startOverButton").style.display = currentStep !== "start" ? "block" : "none";
+    }
+
+    function showSettled() {
+      alert("'Settled' means having Indefinite Leave to Remain (ILR), Indefinite Leave to Enter (ILE), Right of Abode or Permanent Residence.");
+    }
+
+    document.getElementById("backButton").addEventListener("click", () => {
+      if (history.length > 0) {
+        const previousStep = history.pop();
+        renderStep(previousStep);
+      }
+    });
+
+    document.getElementById("startOverButton").addEventListener("click", () => {
+      history.length = 0;
+      renderStep("start");
+    });
+
+    renderStep(currentStep);
+  </script></body>
+  </html>

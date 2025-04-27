@@ -1,0 +1,90 @@
+body {
+    font-family: "Karla";
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background-color: aliceblue;
+  }
+
+  h2 {
+    font-family: 'Abril Fatface', serif;
+    color: rgb(44, 8, 77);
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+      }
+  
+  h3 {
+    font-family: 'Abril Fatface', serif;
+    color: rgb(44, 8, 77);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 75px;
+      }
+
+  button {
+    margin: 10px 0;
+    padding: 10px 15px;
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    border-color: rgb(44, 8, 77);
+    border-width: 2px;
+    font-family: 'Rum Raisin';
+    font-weight: bold;
+    font-size: 24px;
+    box-shadow: 0 8px 8px 0;
+  }
+  .note {
+    font-size: 0.9em;
+    color: #160e0e;
+    margin-top: 30px;
+  }
+  .link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  #controls {
+    display: inline-flex;
+    width: 200px;
+    height: 130px;
+    font-size: 18px;
+    
+  }
+
+  #backButton {
+    margin: 50px 0 20px 5px;
+    padding: 10px 15px;
+    width: 50%;
+    border-radius: 10px;
+    border-color: rgb(44, 8, 77);
+    border-width: 2px;
+    font-size: 18px;
+    font-weight: normal;
+    background-color: darkgray;
+    box-shadow: 0 8px 16px 0;
+  }
+
+  #startOverButton {
+    margin: 50px 0 20px 250px;
+    padding: 10px 15px;
+    width: 50%;
+    border-radius: 10px;
+    border-color: rgb(44, 8, 77);
+    border-width: 2px;
+    margin-left: 250px;
+    font-size: 18px;
+    font-weight: normal;
+    text-align: center;
+    background-color: darkgray;
+    box-shadow: 0 8px 16px 0;
+  }
+
+  #question {
+    font-family: 'Abril Fatface', 'serif';
+    font-weight: bold;
+    font-size: 24px;
+  }
