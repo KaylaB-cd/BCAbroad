@@ -25,90 +25,77 @@
   </div> <script>
     const flow = {
       start: {
-        question: "Were you born in the UK after 1 January 1983?",
+        question: "Were you born after 1 January 1983?",
         options: [
           { text: "Yes", next: "parentCitizen" },
-          { text: "No", next: "bornInUKBefore1983" }
+          { text: "No", next: "bornBefore1983" },
         ]
       },
       
-      bornInUKBefore1983: {
-        question: "Was your father a diplomat or enemy alien in occupation when you were born?",
+      bornBefore1983: {
+        question: "Were you born in a place that was a British Dependent Territory on 1 January 1983",
         options: [
-          {text: "Yes", next: "notCitizen"},
-          {text: "No", next: "citizenUnder111"},
+          {text: "Yes", next: "stKittsHongKong"},
+          {text: "No", next: "parentDependentTerritory"},
         ]
       },
-      citizenUnder111: {
-        question: "You are likely a British Citizen under section 11(1) of the British Nationality Act 1981.",
-        options: []
-      },
-      parentCitizen: {
-        question: "Was one of your parents a British citizen when you were born?",
+      stKittsHongKong: {
+        question: "Were you born in St Kitts?",
         options: [
-          { text: "Yes", next: "citizenUnder1a" },
-          { text: "No", next: "parentEEA" }
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "hongKong"},
+        ]
+      },
+      hongKong: {
+        question: "Were you born in Hong Kong?",
+        options: [
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "parentDependentTerritory"}, 
+        ]
+      },
+      parentDependentTerritory: {
+        question: "Was your parent born in a place that was a British Dependent Territory on 1 January 1983",
+        options: [
+          {text: "Yes", next: "parentStKitts"},
+          {text: "No", next: "comingSoon"},
+        ]
+      },
+      parentStKitts: {
+        question: "Was your parent born in St Kitts?",
+        options: [
+          {text: "Yes", next: "comingSoon"},
+          {text: "No", next: "comingSoon"},
+        ]
+      },
+        parentCitizen: {
+        question: "Was one of your parents a British citizen, Otherwise Than By Descent when you were born?",
+        options: [
+          { text: "Yes", next: "citizenUnder21a" },
+          { text: "No", next: "hagueAdoption" }
         ],
         note: "Note: For births before 1 July 2006, 'parent' means the mother or the legitimate father."
       },
-      citizenUnder1a: {
-        question: "You are likely a British citizen under section 1(1)(a) of the British Nationality Act 1981.",
+      citizenUnder21a: {
+        question: "You are likely a British citizen under section 2(1)(a) of the British Nationality Act 1981.",
         options: []
       },
-      parentSettled: {
-        question: "Was one of your parents settled in the UK when you were born? <span class='link' onclick='showSettled()'>(What does 'settled' mean?)</span>",
+      hagueAdoption: {
+        question: "Were you adopted under a Hague Convention Adoption Order, with one adoptive parent a British Citizen, Otherwise Than By Descent AND that parent habitually resident in the UK?",
         options: [
-          { text: "Yes", next: "citizenUnder1b" },
-          { text: "No", next: "notCitizen" }
+          {text: "Yes", next: "citizenUnder21a"},
+          {text: "No", next: "notCitizen"},
         ],
-        note: "Note: For births before 1 July 2006, 'parent' means the mother or the legitimate father."
+        note: "The adoption paperwork must say it is a Hague Convention adoption."
       },
-      citizenUnder1b: {
-        question: "You are likely a British citizen under section 1(1)(b) of the British Nationality Act 1981.",
+      comingSoon: {
+        question: "this part of the flowchart is coming soon",
         options: []
-      },
-      parentEEA: {
-        question: "Was your parent an EEA national at the time of your birth?",
-        options: [
-          { text: "Yes", next: "eeaDates" },
-          { text: "No", next: "parentSettled" }
-        ]
       },
       notCitizen: {
         question: "You may not be a British citizen by birth. You may wish to seek legal advice or check if you can register as a citizen.",
-        options: []
-      },
-      eeaDates: {
-        question: "When were you born?",
-        options: [
-          { text: "Before 2 October 2000", next: "eeaTreatyRights" },
-          { text: "Between 2 October 2000 and 30 April 2006", next: "eeaILR" },
-          { text: "After 1 May 2006", next: "eeaPR" }
-        ]
-      },
-      eeaTreatyRights: {
-        question: "Was your parent exercising treaty rights (e.g., working, studying) when you were born?",
-        options: [
-            {text: "Yes", next: "citizenUnder1b"},
-            {text: "No", next: "notCitizen"},
-        ]
-      },
-      eeaILR: {
-        question: "Did your parent have Indefinite Leave to Remain (ILR) at the time of your birth?",
-        options: [
-           {text: "Yes", next: "citizenUnder1b"},
-            {text: "No", next: "notCitizen"},
-        ]
-      },
-      eeaPR: {
-        question: "Did your parent have Permanent Residence at the time of your birth.",
-        options: [
-          {text: "Yes", next: "citizenUnder1b"},
-          {text: "No", next: "notCitizen"},
-                  
-        ]
-      }
-    };
+        options: []      
+          },
+    }
 
     let currentStep = "start";
     const history = [];
