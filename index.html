@@ -22,6 +22,7 @@
       <button id="backButton" style="display:none;">Back</button>
       <button id="startOverButton" style="display:none;">Start Over</button>
     </div>
+    <p><a href=C:\Users\micha\OneDrive\Documents\Projects\BCAbroad\Resources\CSS\roa.html>Additional Information</a></p>
   </div> <script>
     const flow = {
       start: {
@@ -103,7 +104,7 @@
         question: "Did your father's country become independent from the UK before 1 January 1983?",
         options: [
           {text: "Yes", next: "gfColonyUk"},
-          {text: "No", next: "comingSoon"},
+          {text: "No", next: "rightOfAbode"},
         ]
       }, 
       gfColonyUk: {
@@ -118,7 +119,8 @@
         options: [
           {text: "Yes", next: "comingSoon"},
           {text: "No", next: "comingSoon"},
-      ]
+      ],
+      note: "A CUKC born, adopted , or registered in the UK or islands, or a CUKC with a parent or grandparentorn, adopted , or registered in the UK or islands"
       },
         parentCitizen: {
         question: "Was one of your parents a British citizen, Otherwise Than By Descent when you were born?",
@@ -194,5 +196,9 @@
     });
 
     renderStep(currentStep);
+
+    document.getElementById("roaChart").addEventListener('click', function(){
+      window.location.href = 'roa.html';
+    });
   </script></body>
   </html>
